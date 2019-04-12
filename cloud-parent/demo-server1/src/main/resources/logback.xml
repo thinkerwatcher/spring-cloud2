@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>    
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,%i索引【从数字0开始递增】,,, -->    
+    <!-- appender是configuration的子节点，是负责写日志的组件。 -->
+    <!-- ConsoleAppender：把日志输出到控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>    
+            <pattern>%d %p %logger{16}(%file:%line\) %t- %m%n</pattern>  
+            <charset>UTF-8</charset>   
+        </encoder>    
+    </appender>    
+    <appender name="infolog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>${LOG_PATH}/info.log</file> 
+    	<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">    
+            <fileNamePattern>${LOG_PATH}/info.%d.%i.zip</fileNamePattern> 
+            <maxHistory>30</maxHistory>   
+            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">    
+                <maxFileSize>10MB</maxFileSize>    
+            </timeBasedFileNamingAndTriggeringPolicy>    
+        </rollingPolicy>    
+        <encoder>    
+            <!-- pattern节点，用来设置日志的输入格式 -->
+            <pattern>%d %p %logger{16}(%file:%line\) %t- %m%n</pattern>    
+            <!-- 记录日志的编码:此处设置字符集 - -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>  
+    <appender name="errorlog" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+    	<file>${LOG_PATH}/error.log</file> 
+    	<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">    
+            <fileNamePattern>${LOG_PATH}/error.%d.%i.zip</fileNamePattern> 
+            <maxHistory>30</maxHistory>   
+            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">    
+                <maxFileSize>10MB</maxFileSize>    
+            </timeBasedFileNamingAndTriggeringPolicy>    
+        </rollingPolicy>    
+        <encoder>    
+            <pattern>%d %p %logger{16}(%file:%line\) %t- %m%n</pattern>    
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+	<logger name="rsf.statistic" level="ERROR"/> 
+    <!-- 控制台输出日志级别 -->
+    <root level="INFO">    
+        <appender-ref ref="STDOUT" /> 
+        <appender-ref ref="infolog"/>
+        <appender-ref ref="errorlog"/>
+    </root>
+</configuration> 

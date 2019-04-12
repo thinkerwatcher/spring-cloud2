@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: demo-server1
+  cloud:
+    config:
+      uri: http://config.server:8888/
