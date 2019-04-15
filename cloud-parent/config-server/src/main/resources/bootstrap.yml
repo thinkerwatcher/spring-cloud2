@@ -11,8 +11,3 @@ spring:
           searchPaths: '{application}'
           label: master
           basedir: D:/git-repo/temp
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: config
-    password: config
